@@ -1,9 +1,18 @@
+import FavoriteButtonCategory from "./component/FavoriteButtonCategory";
+import FavoriteCard from "./component/FavoriteCard";
+import FavoriteDropdown from "./component/FavoriteDropdown";
+import FavoriteInput from "./component/FavoriteInput";
+
 const FavoritePage = () => {
   return (
-    <section className="py-5">
-      <h1 className="text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
-        즐겨찾기 페이지입니다.
+    <section>
+      <h1 className="text-2xl font-bold tracking-tight text-gray-600 md:text2xl text-center mb-2">
+       내 즐겨찾기
       </h1>
+      <FavoriteInput></FavoriteInput>
+      <FavoriteButtonCategory></FavoriteButtonCategory>
+      <FavoriteDropdown></FavoriteDropdown>
+      <FavoriteCard></FavoriteCard>
     </section>
   );
 };
