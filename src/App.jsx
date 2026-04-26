@@ -1,14 +1,7 @@
-
-import './App.css'
+import MainCategory from './pages/MainCategory/MainCategory';
 
 function App() {
-  
-  return (
-    <div className='bg-gray-500 mt-10' >
-    main
-    </div>
-
-  )
+  return <MainCategory />;
 }
 
-export default App
+export default App;
