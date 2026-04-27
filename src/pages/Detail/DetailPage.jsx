@@ -1,7 +1,66 @@
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './DetailPage.style.css';
 import {  Map, MapMarker } from "react-kakao-maps-sdk";
 
 const DetailPage = () => {
+
+  const { state } = useLocation();
+  
+  const place = state?.placeData;
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    if (place) {
+      const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+      const saved = favorites.some(fav => fav.id === place.id);
+      setIsFavorite(saved);
+    }
+  }, [place]); 
+
+  const toggleFavorite = () => {
+    //if (!place) return;
+    
+    //테스트용
+    const currentPlace = place || {
+      id: "16618597", // 예시 ID
+      place_name: "장생당약국"
+    };    
+
+    //console.log("현재 약국 데이터:", place);
+    //console.log("현재 ID:", place.id, "타입:", typeof place.id);
+
+    const placeId = String(currentPlace.id);
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+    //const isExisting = favorites.some(fav => String(fav.id) === String(place.id));
+    const isExisting = favorites.some(fav => String(fav.id) === placeId);
+
+    let newFavorites;
+    if (isExisting) {
+      // 삭제
+      //newFavorites = favorites.filter(fav => String(fav.id) !== String(place.id));
+      newFavorites = favorites.filter(fav => String(fav.id) !== placeId);
+      console.log("즐겨찾기 삭제");
+    } else {
+      // 추가
+      newFavorites = [...favorites, { 
+        //id: place.id, 
+        id: currentPlace.id,
+        //name: place.place_name || place.name 
+      }];
+      console.log("즐겨찾기 추가");
+    }
+
+    localStorage.setItem('favorites', JSON.stringify(newFavorites));
+    setIsFavorite(!isExisting); 
+
+    console.table(JSON.parse(localStorage.getItem('favorites')));
+  };
+
+  //if (!place) return null;
+
+
   return (
     <div className="detail-container">
       <div className="flex flex-col md:flex-row gap-8">
@@ -10,7 +69,14 @@ const DetailPage = () => {
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1">
             <h1 className="text-2xl font-bold text-gray-900">장생당약국</h1>
-            <span className="text-xl text-yellow-400">★</span>
+            <span 
+              onClick={toggleFavorite}
+              className={`text-2xl cursor-pointer transition-colors ${isFavorite ? 'text-yellow-400' : 'text-gray-300'}`}
+              style={{ userSelect: 'none' }}
+            >
+            ★
+            </span>
+            {/* <span className="text-xl text-yellow-400">★</span> */}
           </div>
           <p className="text-sm text-gray-500 mb-8 pb-4 border-b border-gray-100">의료,건강 &gt; 약국</p>
 
