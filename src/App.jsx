@@ -4,6 +4,7 @@ import DetailPage from "./pages/Detail/DetailPage";
 import FavoritePage from "./pages/Favorite/FavoritePage";
 import MainCategory from "./pages/MainCategory/MainCategory";
 import MapPage from "./pages/Map/MapPage";
+import PlacesPage from "./pages/Places/PlacesPage";
 // import { useAddressToCoordinateQuery } from './hooks/useAddressToCoordinate'
 // import { useCategorySearchPlaceQuery } from './hooks/useCategorySearchPlace'
 // import { useCoordinateToAddressQuery } from './hooks/useCoordinateToAddress'
@@ -28,6 +29,7 @@ function App() {
       <Route element={<GlobalLayout />}>
         <Route index element={<MainCategory />} />
         <Route path="/map" element={<MapPage />} />
+        <Route path="/places" element={<PlacesPage />} />
         <Route path="/favorite" element={<FavoritePage />} />
         {/* 디테일은 url 파라미터로 변경할 예정 */}
         <Route path="/detail" element={<DetailPage />} />
