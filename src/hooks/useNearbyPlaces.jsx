@@ -1,11 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import api from "../utils/api";
-
-const nearbyCategories = ["FD6", "CE7", "CT1", "AT4", "CS2", "MT1"];
+import { NEARBY_PLACE_CATEGORY_CODES } from "../constants/placeCategories";
 
 const fetchNearbyPlaces = async ({ coordinate, radius }) => {
   const responses = await Promise.all(
-    nearbyCategories.map((category) =>
+    NEARBY_PLACE_CATEGORY_CODES.map((category) =>
       api.get("/search/category.json", {
         params: {
           category_group_code: category,

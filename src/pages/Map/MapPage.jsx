@@ -1,6 +1,11 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Map, MapMarker, useKakaoLoader } from "react-kakao-maps-sdk";
+import {
+  DEFAULT_PLACE_CATEGORY_STYLE,
+  PLACE_CATEGORY_NAME_BY_CODE,
+  PLACE_CATEGORY_STYLE_BY_CODE,
+} from "../../constants/placeCategories";
 import { useCurrentLocation } from "../../hooks/useCurrentLocation";
 import { useNearbyPlacesQuery } from "../../hooks/useNearbyPlaces";
 
@@ -17,6 +22,14 @@ const formatDistance = (distance) => {
   if (meters < 1000) return `${meters}m`;
 
   return `${(meters / 1000).toFixed(1)}km`;
+};
+
+const getCategoryName = (place) => {
+  return PLACE_CATEGORY_NAME_BY_CODE[place.category_group_code] || place.category_name || "place";
+};
+
+const getCategoryStyle = (place) => {
+  return PLACE_CATEGORY_STYLE_BY_CODE[place.category_group_code] || DEFAULT_PLACE_CATEGORY_STYLE;
 };
 
 const MapPage = () => {
@@ -130,7 +143,7 @@ const MapPage = () => {
                 <button
                   type="button"
                   onClick={() => handlePlaceClick(place)}
-                  className="px-2 py-1 text-sm font-semibold text-slate-950"
+                  className={`rounded-md border px-2 py-1 text-sm font-semibold shadow-sm ${getCategoryStyle(place).marker}`}
                 >
                   {place.place_name}
                 </button>
@@ -176,8 +189,13 @@ const MapPage = () => {
                     <span className="block text-sm font-bold text-slate-950">
                       {place.place_name}
                     </span>
-                    <span className="mt-1 block text-xs font-medium text-slate-600">
-                      {place.category_name || "장소"} · {formatDistance(place.distance)}
+                    <span className="mt-2 flex items-center gap-2 text-xs font-medium text-slate-600">
+                      <span
+                        className={`rounded-full px-2 py-0.5 ${getCategoryStyle(place).badge}`}
+                      >
+                        {getCategoryName(place)}
+                      </span>
+                      <span>{formatDistance(place.distance)}</span>
                     </span>
                     <span className="mt-1 block text-xs text-slate-500">
                       {place.road_address_name || place.address_name}
