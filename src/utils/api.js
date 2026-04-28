@@ -1,32 +1,36 @@
-import axios from 'axios'
-
 const API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
+const BASE_URL = "https://dapi.kakao.com/v2/local";
 
-const api = axios.create({
-    baseURL: "https://dapi.kakao.com/v2/local/",
-    headers: {
-        Accept:'application/json',
-        Authorization: `KakaoAK ${API_KEY}`
+const createQueryString = (params = {}) => {
+  const searchParams = new URLSearchParams();
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== "") {
+      searchParams.set(key, value);
     }
-});
-
-axios.interceptors.request.use(function (config) {
-    // 요청이 전달되기 전에 작업 수행
-    return config;
-  }, function (error) {
-    // 요청 오류가 있는 작업 수행
-    return Promise.reject(error);
   });
 
-// 응답 인터셉터 추가하기
-axios.interceptors.response.use(function (response) {
-    // 2xx 범위에 있는 상태 코드는 이 함수를 트리거 합니다.
-    // 응답 데이터가 있는 작업 수행
-    return response;
-  }, function (error) {
-    // 2xx 외의 범위에 있는 상태 코드는 이 함수를 트리거 합니다.
-    // 응답 오류가 있는 작업 수행
-    return Promise.reject(error);
-  });
+  const queryString = searchParams.toString();
+  return queryString ? `?${queryString}` : "";
+};
 
-export default api
+const api = {
+  async get(path, { params } = {}) {
+    const response = await fetch(`${BASE_URL}${path}${createQueryString(params)}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `KakaoAK ${API_KEY}`,
+      },
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data?.message || "카카오 API 요청에 실패했습니다.");
+    }
+
+    return { data };
+  },
+};
+
+export default api;
