@@ -9,6 +9,8 @@ import { useStore } from "../../store/useStore";
 
 const FavoritePage = () => {
 
+
+
   const [search, setSearch] = useState("")
   const [active, setActive] = useState("전체")
   const [distanceArea,setDistanceArea] = useState("방문순")
