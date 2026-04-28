@@ -1,8 +1,8 @@
 export const mainCategoryCards = [
-  { id: 1, title: '맛집', icon: '🍲' },
+  { id: 1, title: '음식점', icon: '🍲' },
   { id: 2, title: '카페', icon: '☕' },
-  { id: 3, title: '액티비티', icon: '🎯' },
-  { id: 4, title: '문화생활', icon: '🎨' },
+  { id: 3, title: '관광명소', icon: '🎯' },
+  { id: 4, title: '문화시설', icon: '🎨' },
 ];
 export const mainCategoryTitle = '여기서 뭐할까?';
 export const mainCategoryBannerText = '현재 위치 기반으로 3분 만에 찾는 나만의 완벽한 하루 코스!';

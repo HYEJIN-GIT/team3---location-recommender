@@ -16,7 +16,7 @@ function MainCategory() {
   }, []);
 
   return (
-    <main className="bg-[#f1f9ff] px-6 py-6">
+    <main className="px-6 py-6">
       <section className="mx-auto max-w-xl">
         <header className="mb-7">
           <h1 className="text-center text-5xl font-bold text-slate-900">{mainCategoryTitle}</h1>
