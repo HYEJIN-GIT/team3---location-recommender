@@ -1,9 +1,13 @@
-export const PLACE_CATEGORY_NAME_BY_CODE = {
-  CT1: "culturalFacility",
-  AT4: "touristAttraction",
-  FD6: "restaurant",
-  CE7: "cafe",
+export const PLACE_CATEGORY_CODE_BY_NAME = {
+  culturalFacility: "CT1",
+  touristAttraction: "AT4",
+  restaurant: "FD6",
+  cafe: "CE7",
 };
+
+export const PLACE_CATEGORY_NAME_BY_CODE = Object.fromEntries(
+  Object.entries(PLACE_CATEGORY_CODE_BY_NAME).map(([name, code]) => [code, name]),
+);
 
 export const NEARBY_PLACE_CATEGORY_CODES = Object.keys(PLACE_CATEGORY_NAME_BY_CODE);
 
