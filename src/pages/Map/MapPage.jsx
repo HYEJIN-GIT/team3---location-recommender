@@ -14,9 +14,9 @@ import NearbyPlaceList from "./components/NearbyPlaceList";
 import NearbyPlaceMap from "./components/NearbyPlaceMap";
 
 const radiusFilters = [
+  { label: "300m", value: 300, mapLevel: 3 },
+  { label: "500m", value: 500, mapLevel: 4 },
   { label: "1km", value: 1000, mapLevel: 5 },
-  { label: "5km", value: 5000, mapLevel: 8 },
-  { label: "10km", value: 10000, mapLevel: 9 },
 ];
 
 const CATEGORY_CODE_BY_QUERY = NEARBY_PLACE_CATEGORY_CODES.reduce((categories, code) => {
@@ -52,7 +52,7 @@ const MapPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const kakaoAppKey = import.meta.env.VITE_KAKAO_SCRIPT_API_KEY;
-  const [radius, setRadius] = useState(1000);
+  const [radius, setRadius] = useState(300);
   const { location, isDefaultLocation, error: locationError } = useCurrentLocation();
   const categoryQuery = searchParams.get("category") ?? "";
   const selectedCategoryCode = categoryQuery ? getSelectedCategoryCode(categoryQuery) : undefined;
