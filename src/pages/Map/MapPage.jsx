@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { Map, MapMarker, useKakaoLoader } from "react-kakao-maps-sdk";
 import {
   DEFAULT_PLACE_CATEGORY_STYLE,
+  PLACE_CATEGORY_CODE_BY_NAME,
   PLACE_CATEGORY_NAME_BY_CODE,
   PLACE_CATEGORY_STYLE_BY_CODE,
 } from "../../constants/placeCategories";
@@ -38,6 +39,9 @@ const MapPage = () => {
   const kakaoAppKey = import.meta.env.VITE_KAKAO_SCRIPT_API_KEY;
   const [radius, setRadius] = useState(1000);
   const selectedCategory = searchParams.get("category");
+  const selectedCategoryCode =
+    PLACE_CATEGORY_CODE_BY_NAME[selectedCategory] ||
+    (PLACE_CATEGORY_NAME_BY_CODE[selectedCategory] ? selectedCategory : null);
   const { location, isDefaultLocation, error: locationError } = useCurrentLocation();
   const {
     data: places = [],
@@ -46,7 +50,7 @@ const MapPage = () => {
   } = useNearbyPlacesQuery({
     coordinate: location,
     radius,
-    selectedCategory,
+    selectedCategory: selectedCategoryCode,
   });
 
   const [loading, error] = useKakaoLoader({

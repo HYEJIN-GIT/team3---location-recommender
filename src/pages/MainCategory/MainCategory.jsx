@@ -30,7 +30,7 @@ function MainCategory() {
               key={card.id}
               icon={card.icon}
               title={card.title}
-              onClick={() => navigate(`/map?category=${card.code}`)}
+              onClick={() => navigate(`/map?category=${card.category}`)}
             />
           ))}
         </div>
