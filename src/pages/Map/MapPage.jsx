@@ -53,10 +53,6 @@ const MapPage = () => {
   const [searchParams] = useSearchParams();
   const kakaoAppKey = import.meta.env.VITE_KAKAO_SCRIPT_API_KEY;
   const [radius, setRadius] = useState(1000);
-  const selectedCategory = searchParams.get("category");
-  const selectedCategoryCode =
-    PLACE_CATEGORY_CODE_BY_NAME[selectedCategory] ||
-    (PLACE_CATEGORY_NAME_BY_CODE[selectedCategory] ? selectedCategory : null);
   const { location, isDefaultLocation, error: locationError } = useCurrentLocation();
   const categoryQuery = searchParams.get("category") ?? "";
   const selectedCategoryCode = categoryQuery ? getSelectedCategoryCode(categoryQuery) : undefined;
