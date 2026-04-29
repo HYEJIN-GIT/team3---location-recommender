@@ -1,11 +1,44 @@
-const MainCategory = () => {
+import { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import BottomBanner from './components/BottomBanner';
+import CategoryCard from './components/CategoryCard';
+import {
+  mainCategoryCards,
+  mainCategoryBannerMessages,
+  mainCategoryBannerText,
+  mainCategoryTitle,
+} from './constants/mainCategoryData';
+
+function MainCategory() {
+  const navigate = useNavigate();
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    setMessage(mainCategoryBannerMessages[Math.floor(Math.random() * mainCategoryBannerMessages.length)]);
+  }, []);
+
   return (
-    <section className="py-5">
-      <h1 className="text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
-        메인 카테고리 페이지입니다.
-      </h1>
-    </section>
+    <main className="px-6 py-6">
+      <section className="mx-auto max-w-xl">
+        <header className="mb-7">
+          <h1 className="text-center text-5xl font-bold text-slate-900">{mainCategoryTitle}</h1>
+        </header>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          {mainCategoryCards.map((card) => (
+            <CategoryCard
+              key={card.id}
+              icon={card.icon}
+              title={card.title}
+              onClick={() => navigate(`/map?category=${card.category}`)}
+            />
+          ))}
+        </div>
+
+        <BottomBanner text={message || mainCategoryBannerText} />
+      </section>
+    </main>
   );
-};
+}
 
 export default MainCategory;

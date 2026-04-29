@@ -2,9 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import api from "../utils/api";
 import { NEARBY_PLACE_CATEGORY_CODES } from "../constants/placeCategories";
 
-const fetchNearbyPlaces = async ({ coordinate, radius }) => {
+const fetchNearbyPlaces = async ({ coordinate, radius, selectedCategory }) => {
+  const categories =
+    selectedCategory && NEARBY_PLACE_CATEGORY_CODES.includes(selectedCategory)
+      ? [selectedCategory]
+      : NEARBY_PLACE_CATEGORY_CODES;
+
   const responses = await Promise.all(
-    NEARBY_PLACE_CATEGORY_CODES.map((category) =>
+    categories.map((category) =>
       api.get("/search/category.json", {
         params: {
           category_group_code: category,
@@ -31,10 +36,10 @@ const fetchNearbyPlaces = async ({ coordinate, radius }) => {
   );
 };
 
-export const useNearbyPlacesQuery = ({ coordinate, radius }) => {
+export const useNearbyPlacesQuery = ({ coordinate, radius, selectedCategory }) => {
   return useQuery({
-    queryKey: ["nearby-places", coordinate, radius],
-    queryFn: () => fetchNearbyPlaces({ coordinate, radius }),
+    queryKey: ["nearby-places", coordinate, radius, selectedCategory],
+    queryFn: () => fetchNearbyPlaces({ coordinate, radius, selectedCategory }),
     enabled: Boolean(coordinate?.lat && coordinate?.lng && radius),
   });
 };
