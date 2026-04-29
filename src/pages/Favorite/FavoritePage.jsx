@@ -11,7 +11,6 @@ import { useLocation } from "react-router-dom";
 
 const FavoritePage = () => {
  
-  const place = useLocation()
   const { newFavorites} = useFavoriteStore()
   console.log(newFavorites)
   const [search, setSearch] = useState("")
