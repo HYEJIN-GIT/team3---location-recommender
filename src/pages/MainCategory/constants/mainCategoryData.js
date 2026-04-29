@@ -1,8 +1,10 @@
+import { PLACE_CATEGORY_CODE_BY_NAME } from "../../../constants/placeCategories";
+
 export const mainCategoryCards = [
-  { id: 1, title: '음식점', icon: '🍲' },
-  { id: 2, title: '카페', icon: '☕' },
-  { id: 3, title: '관광명소', icon: '🎯' },
-  { id: 4, title: '문화시설', icon: '🎨' },
+  { id: 1, title: "음식점", icon: "🍲", code: PLACE_CATEGORY_CODE_BY_NAME.restaurant },
+  { id: 2, title: "카페", icon: "☕", code: PLACE_CATEGORY_CODE_BY_NAME.cafe },
+  { id: 3, title: "관광명소", icon: "🎯", code: PLACE_CATEGORY_CODE_BY_NAME.touristAttraction },
+  { id: 4, title: "문화시설", icon: "🎨", code: PLACE_CATEGORY_CODE_BY_NAME.culturalFacility },
 ];
 export const mainCategoryTitle = '여기서 뭐할까?';
 export const mainCategoryBannerText = '현재 위치 기반으로 3분 만에 찾는 나만의 완벽한 하루 코스!';

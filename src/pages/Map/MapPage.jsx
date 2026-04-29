@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Map, MapMarker, useKakaoLoader } from "react-kakao-maps-sdk";
 import {
   DEFAULT_PLACE_CATEGORY_STYLE,
@@ -34,8 +34,10 @@ const getCategoryStyle = (place) => {
 
 const MapPage = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const kakaoAppKey = import.meta.env.VITE_KAKAO_SCRIPT_API_KEY;
   const [radius, setRadius] = useState(1000);
+  const selectedCategory = searchParams.get("category");
   const { location, isDefaultLocation, error: locationError } = useCurrentLocation();
   const {
     data: places = [],
@@ -44,6 +46,7 @@ const MapPage = () => {
   } = useNearbyPlacesQuery({
     coordinate: location,
     radius,
+    selectedCategory,
   });
 
   const [loading, error] = useKakaoLoader({

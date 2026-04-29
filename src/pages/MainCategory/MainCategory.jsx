@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import BottomBanner from './components/BottomBanner';
 import CategoryCard from './components/CategoryCard';
 import {
@@ -9,6 +10,7 @@ import {
 } from './constants/mainCategoryData';
 
 function MainCategory() {
+  const navigate = useNavigate();
   const [message, setMessage] = useState('');
 
   useEffect(() => {
@@ -24,7 +26,12 @@ function MainCategory() {
 
         <div className="grid gap-4 sm:grid-cols-2">
           {mainCategoryCards.map((card) => (
-            <CategoryCard key={card.id} icon={card.icon} title={card.title} />
+            <CategoryCard
+              key={card.id}
+              icon={card.icon}
+              title={card.title}
+              onClick={() => navigate(`/map?category=${card.code}`)}
+            />
           ))}
         </div>
 
