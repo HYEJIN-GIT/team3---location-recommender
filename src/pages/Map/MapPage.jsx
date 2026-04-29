@@ -55,6 +55,7 @@ const MapPage = () => {
     [radius],
   );
 
+  
   const handlePlaceClick = (place) => {
     navigate("/places", {
       state: { place },

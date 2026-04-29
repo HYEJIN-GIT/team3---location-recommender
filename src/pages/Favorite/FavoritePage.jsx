@@ -4,13 +4,16 @@ import FavoriteCard from "./component/FavoriteCard";
 import FavoriteDropdown from "./component/FavoriteDropdown";
 import FavoriteInput from "./component/FavoriteInput";
 import { useStore } from "../../store/useStore";
-
+import { useFavoriteStore } from "../../hooks/useFavoriteStore";
+import { PLACE_CATEGORY_NAME_BY_CODE} from "../../constants/placeCategories";
+import { useLocation } from "react-router-dom";
 
 
 const FavoritePage = () => {
-
-
-
+ 
+  const place = useLocation()
+  const { newFavorites} = useFavoriteStore()
+  console.log(newFavorites)
   const [search, setSearch] = useState("")
   const [active, setActive] = useState("전체")
   const [distanceArea,setDistanceArea] = useState("방문순")

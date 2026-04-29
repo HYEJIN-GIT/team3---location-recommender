@@ -1,9 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
+import { useFavoriteStore } from "../../hooks/useFavoriteStore";
 
 const PlacesPage = () => {
   const { state } = useLocation();
   const place = state?.place;
-
   if (!place) {
     return (
       <section className="py-5">
@@ -53,6 +53,7 @@ const PlacesPage = () => {
           <Link to="/map" className="btn btn-outline">
             다시 고르기
           </Link>
+
           {place.place_url && (
             <a
               href={place.place_url}
