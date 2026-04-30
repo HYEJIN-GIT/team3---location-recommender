@@ -10,6 +10,8 @@ const DetailPage = () => {
   const { state } = useLocation();
   
   const place = state?.place;
+  console.log("place:", place);
+
   // const [isFavorite, setIsFavorite] = useState(false);
 
    if (!place) return <div>잘못된 접근입니다.</div>;
@@ -53,7 +55,7 @@ const DetailPage = () => {
               <span className="custom-icon">📞</span>
               <div>
                 <p className="text-xl font-bold text-gray-800 tracking-tight">{place.phone || "전화번호 없음"}</p>
-                <p className="text-xs text-gray-400">약국</p>
+                {/* <p className="text-xs text-gray-400">약국</p> */}
               </div>
             </div>
 

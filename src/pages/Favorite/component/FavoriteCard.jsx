@@ -1,43 +1,69 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useStore } from "../../../store/useStore";
+import { 
+  PLACE_CATEGORY_STYLE_BY_CODE 
+
+ } from '../../../constants/placeCategories';
+import {  codeName } from '../../../utils/getCodeName';
+import { useFavoriteStore } from '../../../hooks/useFavoriteStore';
+
 
 const FavoriteCard = ({item,rank}) => {
-  const navigate = useNavigate()
-  const goToDetail=()=>{
-    navigate('/detail?q=디테일')
-  }
-  const {deleteFavorite} = useStore()
 
-  const deleteList = (id)=>{
-    deleteFavorite(id)
-  }
+
+  
+  
+  const code =   codeName(item.category_name);
+  const style = PLACE_CATEGORY_STYLE_BY_CODE[code];
+
+  const navigate = useNavigate()
+  const goToDetail = () => {
+    navigate("/detail", {
+      state: { place: item } 
+    });
+  };
+
+
+  const {removeFavorite}  = useFavoriteStore()
+ 
   return (
-    <div className='m-4 cursor-pointer' >
+    <div className='m-4' >
+
+
+
       <div className="card card-side bg-base-100 shadow-sm">
   <figure>
     <span className='rounded-lg  m-4 bg-gray-300 p-1  text-gray-900 h-9 w-9 text-center absolute left-0 top-0'>{rank+1}</span>
-    <img
-      src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
-      alt="Movie" 
-      onClick={goToDetail}
-      />
+    <div className='flex justify-center items-center m-4'>
+    <div className='bg-amber-50 text-4xl m-4 p-20 cursor-pointer' onClick={goToDetail}>
+  {item.category_name?.includes("카페") ? "☕️" 
+  : item.category_name?.includes("음식점")?"🍲"
+  :item.category_name?.includes("관광명소")?"🎯":
+  "🎨"} 
+
+</div>
+    </div>
+
   </figure>
   
   <div className="card-body">
     <div className='flex'>
-    <h2 className="card-title">{item.name}</h2>
-    <span className='m-2 ml-3 bg-red-300 p-1 text-xs text-red-900 rounded-2xl w-15 text-center'>{item.category}</span>
+    <h2 className="card-title">{item.place_name}</h2>
+  
+    <span className={`m-2 ml-3 p-1 text-xs rounded-2xl ${style?.badge}`}>
+  {item.category_name?.split(">").pop()}
+</span>
     </div>
     
-    <p>{item.address}</p>
-    <div className="card-actions justify-end ">
-        <div>
-        <div className='mb-8 mr-2'>{item.visitCount}번 방문 </div>
-        <button className="btn btn-ghost" onClick={goToDetail}>바로가기</button>
+    <div className='text-gray-500'>{item.address_name}</div>
+    <div className='text-gray-500'>{item.phone.length===0?"전화번호가 없습니다" :item.phone}</div>
+    <div className="card-actions justify-end mt-auto">
+    
+     
 
-        <button className=" btn btn-ghost text-red-400" onClick={()=>deleteList(item.id)}>♥︎</button>
-        </div>
+        <button className="btn btn-ghost " onClick={goToDetail}>바로가기</button>
+        <button className=" btn btn-ghost" onClick={()=>removeFavorite(item.id)}>즐겨찾기 삭제</button>
+     
      
     </div>
   </div>

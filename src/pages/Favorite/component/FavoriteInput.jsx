@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import FavoriteCard from './FavoriteCard';
-import FavoriteDropdown from './FavoriteDropdown';
+import { useFavoriteStore } from '../../../hooks/useFavoriteStore'
+
 
 const FavoriteInput = ({search,setSearch}) => {
+
 
 
   return (

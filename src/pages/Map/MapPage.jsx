@@ -80,6 +80,7 @@ const MapPage = () => {
     [radius],
   );
 
+  
   const handlePlaceClick = (place) => {
     navigate("/detail", {
       state: { place },

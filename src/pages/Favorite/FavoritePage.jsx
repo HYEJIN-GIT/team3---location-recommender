@@ -1,32 +1,31 @@
 import { useState } from "react";
 import FavoriteButtonCategory from "./component/FavoriteButtonCategory";
 import FavoriteCard from "./component/FavoriteCard";
-import FavoriteDropdown from "./component/FavoriteDropdown";
+// import FavoriteDropdown from "./component/FavoriteDropdown";
 import FavoriteInput from "./component/FavoriteInput";
-import { useStore } from "../../store/useStore";
-
+import { useFavoriteStore } from "../../hooks/useFavoriteStore";
+import {  codeName } from "../../utils/getCodeName";
 
 
 const FavoritePage = () => {
-
+   
+  const { favorites } = useFavoriteStore();
 
 
   const [search, setSearch] = useState("")
-  const [active, setActive] = useState("전체")
-  const [distanceArea,setDistanceArea] = useState("방문순")
- 
-  const {examList}= useStore()
-  let sorted = [...examList];
+  const [active, setActive] = useState("ALL")
 
-  if (distanceArea === "방문순") {
-    sorted = [...examList].sort((a, b) => b.visitCount - a.visitCount);
-  } else if (distanceArea === "거리순") {
-    sorted = [...examList].sort((a, b) => a.distance - b.distance);
-  }
+  
+  const filter = favorites.filter(item => {
+    const code =  codeName(item.category_name);
+    return (
+      item.place_name.toLowerCase().includes(search.toLowerCase()) &&
+      (active === "ALL" || code === active)
+    );
+  });
+  
 
-  const filter = sorted.filter(item=>item.name.includes(search) &&
-  (active === "전체" || item.category === active) 
-)
+
 
   return (  
     <section>
@@ -35,17 +34,23 @@ const FavoritePage = () => {
       </h1>
     <FavoriteInput search={search} setSearch={setSearch}></FavoriteInput>
     <FavoriteButtonCategory active={active} setActive={setActive}></FavoriteButtonCategory>
-    <FavoriteDropdown distanceArea={distanceArea} setDistanceArea={setDistanceArea}></FavoriteDropdown>
+    {/* <FavoriteDropdown distanceArea={distanceArea} setDistanceArea={setDistanceArea}></FavoriteDropdown> */}
 <div>
-{
-       filter.map((item,index)=>(
-          <FavoriteCard item={item} rank={index} key={index}></FavoriteCard>
-        ))
-      }
+
     
+        
+       
 </div>
 
 
+{
+  filter.length === 0 ? 
+  <div className="text-2xl font-bold tracking-tight text-gray-600 md:text2xl text-center mb-2"> 즐겨찾기를 추가해주세요
+  </div> :
+   filter.map((item,index)=>(
+    <FavoriteCard key={item.id} item={item} rank={index}></FavoriteCard>
+  ))
+}
     
     </section>
   );
