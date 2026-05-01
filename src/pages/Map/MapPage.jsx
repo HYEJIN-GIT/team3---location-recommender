@@ -8,6 +8,7 @@ import {
   PLACE_CATEGORY_STYLE_BY_CODE,
 } from "../../constants/placeCategories";
 import { useCurrentLocation } from "../../hooks/useCurrentLocation";
+import { useFavoriteStore } from "../../hooks/useFavoriteStore";
 import { useNearbyPlacesQuery } from "../../hooks/useNearbyPlaces";
 import MapHeader from "./components/MapHeader";
 import NearbyPlaceList from "./components/NearbyPlaceList";
@@ -53,6 +54,8 @@ const MapPage = () => {
   const [searchParams] = useSearchParams();
   const kakaoAppKey = import.meta.env.VITE_KAKAO_SCRIPT_API_KEY;
   const [radius, setRadius] = useState(300);
+  const favorites = useFavoriteStore((state) => state.favorites);
+  const toggleFavorite = useFavoriteStore((state) => state.toggleFavorite);
   const { location, isDefaultLocation, error: locationError } = useCurrentLocation();
   const categoryQuery = searchParams.get("category") ?? "";
   const selectedCategoryCode = categoryQuery ? getSelectedCategoryCode(categoryQuery) : undefined;
@@ -80,6 +83,10 @@ const MapPage = () => {
     [radius],
   );
 
+  const favoriteIds = useMemo(
+    () => new Set(favorites.map((favorite) => String(favorite.id))),
+    [favorites],
+  );
   
   const handlePlaceClick = (place) => {
     navigate("/detail", {
@@ -131,6 +138,7 @@ const MapPage = () => {
           location={location}
           mapLevel={selectedFilter.mapLevel}
           places={places}
+          favoriteIds={favoriteIds}
           onPlaceClick={handlePlaceClick}
         />
 
@@ -141,7 +149,9 @@ const MapPage = () => {
           formatDistance={formatDistance}
           getCategoryName={getCategoryName}
           getCategoryStyle={getCategoryStyle}
+          favoriteIds={favoriteIds}
           onPlaceClick={handlePlaceClick}
+          onFavoriteToggle={toggleFavorite}
         />
       </div>
     </section>
