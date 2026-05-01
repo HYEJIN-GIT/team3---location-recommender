@@ -45,7 +45,7 @@ const FavoritePage = () => {
 
 {
   filter.length === 0 ? 
-  <div className="text-2xl font-bold tracking-tight text-gray-600 md:text2xl text-center mb-2"> 즐겨찾기를 추가해주세요
+  <div className="text-2xl font-bold tracking-tight text-gray-600 md:text2xl text-center m-8"> 즐겨찾기를 추가해주세요
   </div> :
    filter.map((item,index)=>(
     <FavoriteCard key={item.id} item={item} rank={index}></FavoriteCard>

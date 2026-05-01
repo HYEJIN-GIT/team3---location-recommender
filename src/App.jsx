@@ -5,6 +5,9 @@ import FavoritePage from "./pages/Favorite/FavoritePage";
 import MainCategory from "./pages/MainCategory/MainCategory";
 import MapPage from "./pages/Map/MapPage";
 import PlacesPage from "./pages/Places/PlacesPage";
+import Login from "./pages/Login/Login";
+import Private from "./pages/Login/Private";
+import { useAuthStore } from "./hooks/useAuthStore";
 // import { useAddressToCoordinateQuery } from './hooks/useAddressToCoordinate'
 // import { useCategorySearchPlaceQuery } from './hooks/useCategorySearchPlace'
 // import { useCoordinateToAddressQuery } from './hooks/useCoordinateToAddress'
@@ -24,11 +27,15 @@ function App() {
   // console.log("data3:", data3);
   // console.log("data4:", data4);
 
+  // const [authenticate, setAuthenticate] = useState(false);
+  const authenticate = useAuthStore((state) => state.authenticate);
+
   return (
     <Routes>
       <Route element={<GlobalLayout />}>
         <Route index element={<MainCategory />} />
-        <Route path="/map" element={<MapPage />} />
+        <Route path="/map"element={<Private><MapPage /></Private>}/>
+        <Route path="/login" element={<Login  />} />
         <Route path="/places" element={<PlacesPage />} />
         <Route path="/favorite" element={<FavoritePage />} />
         {/* 디테일은 url 파라미터로 변경할 예정 */}

@@ -28,7 +28,7 @@ export const useFavoriteStore = create(
             category_name: place.category_name,
             x: place.x,
             y: place.y,
-            place_url: place.place_url
+            place_url: place.place_url,
           }
         ]
 
@@ -58,8 +58,30 @@ export const useFavoriteStore = create(
         } else {
           get().addFavorite(place)
         }
+      },
+      updateRating: (id, rating) => {
+        set((state) => ({
+          favorites: state.favorites.map(item =>
+            String(item.id) === String(id)
+              ? { ...item, rating }
+              : item
+          )
+        }));
+      },
+      updateMemo: (id, memo) => {
+        set((state) => ({
+          favorites: state.favorites.map(item =>
+            String(item.id) === String(id)
+              ? { ...item, memo }
+              : item
+          )
+        }));
       }
+    
+    
+    
     }),
+    
     {
       name: 'favorites-storage'
     }
