@@ -29,6 +29,8 @@ export const useFavoriteStore = create(
             x: place.x,
             y: place.y,
             place_url: place.place_url,
+            place_url: place.place_url,
+            distance: place.distance
           }
         ]
 
