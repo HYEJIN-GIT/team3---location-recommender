@@ -70,17 +70,6 @@ export const useFavoriteStore = create(
           )
         }));
       },
-      updateMemo: (id, memo) => {
-        set((state) => ({
-          favorites: state.favorites.map(item =>
-            String(item.id) === String(id)
-              ? { ...item, memo }
-              : item
-          )
-        }));
-      }
-    
-    
     
     }),
     

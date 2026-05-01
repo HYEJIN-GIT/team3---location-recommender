@@ -17,7 +17,7 @@ const Header = () => {
           <img src="src/layout/Pasted Graphic.png" width={50}></img>
             <NavLink
               to="/"
-              className="btn btn-ghost px-0 text-lg font-extrabold text-slate-900 hover:bg-transparent"
+              className="cursor-pointer px-0  mt-2 text-lg font-extrabold text-slate-900 hover:bg-transparent"
             >
             
               오늘은 어디로

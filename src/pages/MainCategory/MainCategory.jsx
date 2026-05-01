@@ -37,7 +37,7 @@ function MainCategory() {
           <button
             type="button"
             onClick={() => navigate('/map')}
-            className="mt-7 flex h-14 w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-[#faf7ff] text-slate-700 shadow-sm transition-transform duration-200 ease-out hover:scale-[1.02]"
+            className="mt-7 flex h-14 w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-[#faf7ff] text-slate-700 shadow-sm transition-transform duration-200 ease-out hover:scale-[1.02] cursor-pointer"
           >
             <span className="text-2xl leading-none">🗺️</span>
             <span className="text-base font-bold leading-none">내 주변 모든 곳 찾기</span>

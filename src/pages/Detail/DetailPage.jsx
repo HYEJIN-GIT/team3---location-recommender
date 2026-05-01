@@ -52,7 +52,7 @@ const DetailPage = () => {
                     shadow-sm active:scale-95"
         >
           <span className="text-lg">←</span>
-          <span className="text-sm font-medium">뒤로가기</span>
+          <span className="text-sm font-medium cursor-pointer">뒤로가기</span>
         </button>
       </div>
 
