@@ -14,7 +14,7 @@ const Header = () => {
       <div className="mx-auto w-full max-w-6xl px-4">
         <div className="navbar min-h-[72px] px-0">
           <div className="navbar-start">
-          <img src="src/layout/Pasted Graphic.png" width={50}></img>
+          <img src="/Image/logo.png" width={50} />
             <NavLink
               to="/"
               className="cursor-pointer px-0  mt-2 text-lg font-extrabold text-slate-900 hover:bg-transparent"

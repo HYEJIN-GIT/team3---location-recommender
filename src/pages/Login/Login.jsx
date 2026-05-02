@@ -1,44 +1,112 @@
 import React from 'react'
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../../hooks/useAuthStore';
-const Login = () => {
 
+const Login = () => {
   const login = useAuthStore((state) => state.login);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = () => {
+    if (!email || !password) {
+      setError("이메일과 비밀번호를 입력해주세요.");
+      return;
+    }
+    setError("");
     login();
     navigate("/map");
   };
 
-   
+
+  
+
   return (
-    <div>
-      <div className="hero  min-h-screen">
-  <div className="hero-content flex-col lg:flex-row-reverse">
-    <div className="text-center lg:text-left">
-      <h1 className="text-5xl font-bold">로그인을 해주세요!</h1>
-      <p className="py-6">
-        Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-        quasi. In deleniti eaque aut repudiandae et a id nisi.
-      </p>
-    </div>
-    <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-      <div className="card-body">
-        <fieldset className="fieldset">
-          <label className="label">Email</label>
-          <input type="email" className="input" placeholder="Email" />
-          <label className="label">Password</label>
-          <input type="password" className="input" placeholder="Password" />
-          <div><a className="link link-hover">Forgot password?</a></div>
-          <button className="btn btn-neutral mt-4" onClick={handleLogin}>Login</button>
-        </fieldset>
+    <div className="min-h-screen flex items-center justify-center">
+      
+      <div className="w-full max-w-5xl flex flex-col lg:flex-row items-center gap-10 p-6">
+        
+      
+        <div className="text-center lg:text-left">
+          <h1 className="text-4xl lg:text-5xl font-extrabold text-gray-800 leading-tight">
+            오늘 여기서 뭐할래?
+          </h1>
+          <p className="mt-4 text-gray-600 text-lg">
+            나만의 장소를 찾아보고,  
+            최애 장소 및 별점으로 나만의 리스트를 만들어보세요.
+          </p>
+
+          <div className="mt-6 text-sm text-gray-500">
+            📍 카페 / 음식점 / 관광명소까지 한 번에!
+          </div>
+        </div>
+
+      
+        <div className="card w-full max-w-sm bg-base-100 shadow-xl rounded-2xl">
+          <div className="card-body">
+            
+            <h2 className="text-2xl font-bold text-center mb-4">
+              로그인
+            </h2>
+
+            <fieldset className="space-y-3">
+              <div>
+                <label className="label">이메일</label>
+                <input
+                  type="email"
+                  className="input input-bordered w-full"
+                  placeholder="example@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+      
+              </div>
+
+              <div>
+              
+                <label className="label">비밀번호</label>
+                <input
+                  type="password"
+                  className="input input-bordered w-full"
+                  placeholder="비밀번호 입력"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+
+                <div className="text-right">
+                <a className="text-xs text-gray-400 hover:underline cursor-pointer">
+                  비밀번호를 잊으셨나요?
+                </a>
+              </div>
+
+              {error && (
+                <p className="text-red-500 text-sm mt-3">{error}</p>
+              )}
+
+              <button
+                className="btn btn-info  w-full mt-2 text-white"
+                onClick={handleLogin}
+              >
+                로그인하기
+              </button>
+            </fieldset>
+
+            <p className="text-center text-sm text-gray-400 mt-4">
+              아직 계정이 없으신가요?{" "}
+              <span className="text-blue-500 cursor-pointer hover:underline">
+                회원가입
+              </span>
+            </p>
+
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-    </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

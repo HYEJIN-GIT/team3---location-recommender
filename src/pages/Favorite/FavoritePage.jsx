@@ -14,11 +14,10 @@ const FavoritePage = () => {
 
   const [search, setSearch] = useState("")
   const [active, setActive] = useState("ALL")
-<<<<<<< HEAD
+
   const [dropdownList,setDropdownList] = useState("가까운순")
-=======
-  const [dropdownList,setDropdownList] = useState("거리순")
->>>>>>> develop
+
+
 
   
   const filter = favorites.filter(item => {
@@ -46,7 +45,7 @@ const FavoritePage = () => {
        내 즐겨찾기
       </h1>
     <FavoriteInput search={search} setSearch={setSearch}></FavoriteInput>
-    <div className="flex justify-between">
+    <div className=" flex  flex-col   md:flex-row   md:justify-between">
     <FavoriteButtonCategory active={active} setActive={setActive}></FavoriteButtonCategory>
     <FavoriteDropdown dropdownList={dropdownList} setDropdownList={setDropdownList}></FavoriteDropdown>
     </div>

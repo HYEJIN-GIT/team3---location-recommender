@@ -12,33 +12,75 @@ const FavoriteButtonCategory = ({active,setActive}) => {
   ];
  
   return (
-    <div className="m-4">
+
+    <div>
+
+    {/* 모바일 */}
+    <div className="block md:hidden overflow-x-auto px-2">
+      <div className="flex gap-2 w-max">
+        {buttonCategories.map((item, index) => {
+          const style =
+            PLACE_CATEGORY_STYLE_BY_CODE[item.code] ||
+            "bg-gray-200 text-gray-700";
+
+          return (
+            <button
+              key={index}
+              onClick={() => setActive(item.code)}
+              className={`
+                whitespace-nowrap
+                px-4 py-2 rounded-full text-xs
+                transition-all duration-200
+                
+                ${
+                  item.code === "ALL"
+                    ? "bg-gray-200 text-gray-800"
+                    : style.badge
+                }
+
+                ${
+                  active === item.code
+                    ? "scale-105 brightness-90 font-semibold"
+                    : "opacity-80"
+                }
+              `}
+            >
+              {item.label}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+
+    {/* PC */}
+    <div className="hidden md:block m-4">
       {buttonCategories.map((item, index) => {
         const style =
           PLACE_CATEGORY_STYLE_BY_CODE[item.code] ||
-          "bg-gray-600 text-gray-700";
+          "bg-gray-200 text-gray-700";
 
         return (
-          
           <button
             key={index}
             onClick={() => setActive(item.code)}
             className={`
-              cursor-pointer
               btn 
               m-2 px-6 py-2 rounded-2xl text-sm   
               transition-all duration-200
-               hover:scale-105 active:scale-95
-               hover:brightness-95
-             
-               ${
-               item.code === "ALL"
-               ? "bg-gray-200 text-gray-800 hover:bg-gray-300"
-                 : style.badge
-               }
+              hover:scale-105 active:scale-95
+              hover:brightness-95
+              
+              ${
+                item.code === "ALL"
+                  ? "bg-gray-200 text-gray-800 hover:bg-gray-300"
+                  : style.badge
+              }
 
-
-              ${active === item.code ? " brightness-95 border-a scale-105 cursor-pointer " : ""}
+              ${
+                active === item.code
+                  ? "brightness-95 scale-105"
+                  : ""
+              }
             `}
           >
             {item.label}
@@ -46,7 +88,12 @@ const FavoriteButtonCategory = ({active,setActive}) => {
         );
       })}
     </div>
-  );
+
+  </div>
+);
+    
+   
+ 
   
 }
 
