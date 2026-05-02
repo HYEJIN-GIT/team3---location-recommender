@@ -8,6 +8,7 @@ import PlacesPage from "./pages/Places/PlacesPage";
 import Login from "./pages/Login/Login";
 import Private from "./pages/Login/Private";
 import { useAuthStore } from "./hooks/useAuthStore";
+import PrivateFavorite from "./pages/Login/Private";
 // import { useAddressToCoordinateQuery } from './hooks/useAddressToCoordinate'
 // import { useCategorySearchPlaceQuery } from './hooks/useCategorySearchPlace'
 // import { useCoordinateToAddressQuery } from './hooks/useCoordinateToAddress'
@@ -37,7 +38,11 @@ function App() {
         <Route path="/map"element={<Private><MapPage /></Private>}/>
         <Route path="/login" element={<Login  />} />
         <Route path="/places" element={<PlacesPage />} />
-        <Route path="/favorite" element={<FavoritePage />} />
+        <Route path="/favorite" element={
+          < PrivateFavorite>
+            <FavoritePage />
+          </PrivateFavorite>
+        } />
         {/* 디테일은 url 파라미터로 변경할 예정 */}
         <Route path="/detail" element={<DetailPage />} />
       </Route>

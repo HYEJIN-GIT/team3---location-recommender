@@ -1,4 +1,4 @@
-import React,{useEffect, useState}from 'react'
+import React,{ useState}from 'react'
 import { useNavigate} from 'react-router-dom'
 import { PLACE_CATEGORY_STYLE_BY_CODE } from '../../../constants/placeCategories';
 import {  codeName } from '../../../utils/getCodeName';
@@ -13,6 +13,7 @@ const FavoriteCard = ({item,rank}) => {
   
   const code =   codeName(item.category_name);
   const style = PLACE_CATEGORY_STYLE_BY_CODE[code];
+  const [toast,setToast] = useState(false)
 
   const navigate = useNavigate()
   const goToDetail = () => {
@@ -22,11 +23,88 @@ const FavoriteCard = ({item,rank}) => {
   };
 
 
+
   return (
     <div className='m-4' >
+      <div className="block md:hidden">
+
+      <div className="card bg-base-100 shadow-md">
+
+{/* 이미지/아이콘 */}
+<figure>
+  <div
+    className="w-full h-40 flex items-center justify-center text-5xl bg-amber-50 cursor-pointer"
+    onClick={goToDetail}
+  >
+    {item.category_name?.includes("카페") ? "☕️" 
+    : item.category_name?.includes("음식점") ? "🍲"
+    : item.category_name?.includes("관광명소") ? "🎯"
+    : "🎨"}
+  </div>
+</figure>
+
+<div className="card-body p-4">
+
+  {/* 제목 + 별점 */}
+  <div className="flex justify-between items-center">
+    <h2 className="font-bold text-lg truncate">
+      {item.place_name}
+    </h2>
+
+    <div className="rating rating-sm">
+      {[1,2,3,4,5].map((star)=>(
+        <input
+          key={star}
+          type="radio"
+          name={`rating-${item.id}-mobile`}
+          className="mask mask-star-2 bg-orange-400"
+          checked={item.rating === star}
+          onChange={()=>updateRating(item.id, star)}
+        />
+      ))}
+    </div>
+  </div>
+
+  {/* 카테고리 */}
+  <span className={`w-fit px-2 py-1 text-xs rounded-xl ${style?.badge}`}>
+    {item.category_name?.split(">").pop()}
+  </span>
+
+  {/* 주소 */}
+  <div className="text-sm text-gray-500 truncate">
+    {item.address_name}
+  </div>
+
+  {/* 거리 */}
+  <div className="text-sm text-gray-400">
+    📍 {item.distance}m
+  </div>
+
+  {/* 버튼 */}
+  <div className="flex gap-2 mt-3">
+    <button 
+      className="btn btn-sm flex-1"
+      onClick={goToDetail}
+    >
+      상세보기
+    </button>
+
+    <button 
+      className="btn btn-sm btn-error flex-1"
+      onClick={()=>removeFavorite(item.id)}
+    >
+      삭제
+    </button>
+  </div>
+
+</div>
+</div>
 
 
+      </div>
 
+
+  <div className="hidden md:block">
       <div className="card card-side bg-base-100 shadow-sm">
   <figure>
     <span className='rounded-lg  m-4 bg-gray-300 p-1  text-gray-900 h-9 w-9 text-center absolute left-0 top-0'>{rank+1}</span>
@@ -57,7 +135,7 @@ const FavoriteCard = ({item,rank}) => {
     <input
       key={star}
       type="radio"
-      name={`rating-${item.id}`} 
+      name={`rating-${item.id}-pc`} 
       className="mask mask-star-2 bg-orange-400"
       checked={item.rating === star}
       onChange={() => updateRating(item.id, star)}
@@ -81,6 +159,7 @@ const FavoriteCard = ({item,rank}) => {
         <button className=" btn btn-ghost" onClick={()=>removeFavorite(item.id)}>즐겨찾기 삭제</button>
     </div>
   </div>
+</div>
 </div>
     </div>
   )
