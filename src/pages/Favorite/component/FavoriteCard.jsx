@@ -90,7 +90,7 @@ const FavoriteCard = ({item,rank}) => {
     </button>
 
     <button 
-      className="btn btn-sm btn-error flex-1"
+      className="btn btn-sm flex-1"
       onClick={()=>removeFavorite(item.id)}
     >
       삭제
