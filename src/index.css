@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap");
 @import "tailwindcss";
 @plugin "daisyui";
 
@@ -13,8 +14,9 @@ body {
   min-height: 100vh;
   color: #0f172a;
   font-family:
-    "Pretendard",
+    "Gowun Dodum",
     "SUIT",
+    "Pretendard",
     "Noto Sans KR",
     system-ui,
     sans-serif;
