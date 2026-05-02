@@ -30,19 +30,20 @@ const Login = () => {
       <div className="w-full max-w-5xl flex flex-col lg:flex-row items-center gap-10 p-6">
         
       
-        <div className="text-center lg:text-left">
-          <h1 className="text-4xl lg:text-5xl font-extrabold text-gray-800 leading-tight">
-            오늘 여기서 뭐할래?
-          </h1>
-          <p className="mt-4 text-gray-600 text-lg">
-            나만의 장소를 찾아보고,  
-            최애 장소 및 별점으로 나만의 리스트를 만들어보세요.
-          </p>
+      <div className="text-center lg:text-left">
+  <h1 className="text-4xl lg:text-5xl font-extrabold text-gray-800 leading-tight">
+    Nearby에서 주변을 탐색해보세요
+  </h1>
 
-          <div className="mt-6 text-sm text-gray-500">
-            📍 카페 / 음식점 / 관광명소까지 한 번에!
-          </div>
-        </div>
+  <p className="mt-4 text-gray-600 text-lg">
+    내 주변 숨은 장소를 찾고,  
+    별점과 즐겨찾기로 나만의 리스트를 만들어보세요.
+  </p>
+
+  <div className="mt-6 text-sm text-gray-500">
+    📍 카페 · 음식점 · 관광명소까지 한눈에
+  </div>
+</div>
 
       
         <div className="card w-full max-w-sm bg-base-100 shadow-xl rounded-2xl">
