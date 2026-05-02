@@ -14,7 +14,11 @@ const FavoritePage = () => {
 
   const [search, setSearch] = useState("")
   const [active, setActive] = useState("ALL")
+<<<<<<< HEAD
   const [dropdownList,setDropdownList] = useState("가까운순")
+=======
+  const [dropdownList,setDropdownList] = useState("거리순")
+>>>>>>> develop
 
   
   const filter = favorites.filter(item => {

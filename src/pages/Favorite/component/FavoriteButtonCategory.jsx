@@ -25,7 +25,11 @@ const FavoriteButtonCategory = ({active,setActive}) => {
             onClick={() => setActive(item.code)}
             className={`
               cursor-pointer
-              m-2 px-6 py-2 rounded-2xl text-sm
+              btn 
+              m-2 px-6 py-2 rounded-2xl text-sm   
+              transition-all duration-200
+               hover:scale-105 active:scale-95
+               hover:brightness-95
              
                ${
                item.code === "ALL"
@@ -33,9 +37,8 @@ const FavoriteButtonCategory = ({active,setActive}) => {
                  : style.badge
                }
 
-              transition-all 
-              hover:-translate-y-1/6 hover:shadow-sm
-              ${active === item.code ? "cursor-pointer border" : ""}
+
+              ${active === item.code ? " brightness-95 border-a scale-105 cursor-pointer " : ""}
             `}
           >
             {item.label}

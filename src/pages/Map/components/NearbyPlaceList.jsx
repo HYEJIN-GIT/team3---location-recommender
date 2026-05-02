@@ -5,7 +5,9 @@ const NearbyPlaceList = ({
   formatDistance,
   getCategoryName,
   getCategoryStyle,
+  favoriteIds,
   onPlaceClick,
+  onFavoriteToggle,
 }) => {
   return (
     <aside className="h-[700px] overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
@@ -33,28 +35,51 @@ const NearbyPlaceList = ({
         )}
 
         <ul className="space-y-2">
-          {places.map((place) => (
-            <li key={place.id}>
-              <button
-                type="button"
-                onClick={() => onPlaceClick(place)}
-                className="w-full rounded-md border border-slate-200 bg-slate-50 px-3 py-3 text-left transition hover:border-slate-400 hover:bg-white"
+          {places.map((place) => {
+            const isFavorite = favoriteIds.has(String(place.id));
+
+            return (
+              <li
+                key={place.id}
+                className="flex overflow-hidden rounded-md border border-slate-200 bg-slate-50 transition hover:border-slate-400 hover:bg-white"
               >
-                <span className="block text-sm font-bold text-slate-950">
-                  {place.place_name}
-                </span>
-                <span className="mt-2 flex items-center gap-2 text-xs font-medium text-slate-600">
-                  <span className={`rounded-full px-2 py-0.5 ${getCategoryStyle(place).badge}`}>
-                    {getCategoryName(place)}
+                <button
+                  type="button"
+                  onClick={() => onPlaceClick(place)}
+                  className="min-w-0 flex-1 px-3 py-3 text-left"
+                >
+                  <span className="block truncate text-sm font-bold text-slate-950">
+                    {place.place_name}
                   </span>
-                  <span>{formatDistance(place.distance)}</span>
-                </span>
-                <span className="mt-1 block text-xs text-slate-500">
-                  {place.road_address_name || place.address_name}
-                </span>
-              </button>
-            </li>
-          ))}
+                  <span className="mt-2 flex items-center gap-2 text-xs font-medium text-slate-600">
+                    <span className={`rounded-full px-2 py-0.5 ${getCategoryStyle(place).badge}`}>
+                      {getCategoryName(place)}
+                    </span>
+                    <span>{formatDistance(place.distance)}</span>
+                  </span>
+                  <span className="mt-1 block truncate text-xs text-slate-500">
+                    {place.road_address_name || place.address_name}
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  aria-label={`${place.place_name || "place"} ${
+                    isFavorite ? "remove from favorites" : "add to favorites"
+                  }`}
+                  onClick={() => onFavoriteToggle(place)}
+                  className={`grid w-12 shrink-0 place-items-center border-l border-slate-200 bg-white text-2xl leading-none transition hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-inset ${
+                    isFavorite
+                      ? "text-yellow-400 focus:ring-yellow-400"
+                      : "text-slate-300 focus:ring-slate-900"
+                  }`}
+                  title="Toggle favorite"
+                >
+                  <span aria-hidden="true">&#9733;</span>
+                </button>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </aside>

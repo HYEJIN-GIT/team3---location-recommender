@@ -29,6 +29,8 @@ export const useFavoriteStore = create(
             x: place.x,
             y: place.y,
             place_url: place.place_url,
+            place_url: place.place_url,
+            distance: place.distance
           }
         ]
 
@@ -68,17 +70,6 @@ export const useFavoriteStore = create(
           )
         }));
       },
-      updateMemo: (id, memo) => {
-        set((state) => ({
-          favorites: state.favorites.map(item =>
-            String(item.id) === String(id)
-              ? { ...item, memo }
-              : item
-          )
-        }));
-      }
-    
-    
     
     }),
     
