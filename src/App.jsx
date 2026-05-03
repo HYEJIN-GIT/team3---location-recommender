@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
 import GlobalLayout from "./layout/GlobalLayout";
 import DetailPage from "./pages/Detail/DetailPage";
 import FavoritePage from "./pages/Favorite/FavoritePage";
@@ -7,7 +8,6 @@ import MapPage from "./pages/Map/MapPage";
 import PlacesPage from "./pages/Places/PlacesPage";
 import Login from "./pages/Login/Login";
 import Private from "./pages/Login/Private";
-import { useAuthStore } from "./hooks/useAuthStore";
 import PrivateFavorite from "./pages/Login/Private";
 // import { useAddressToCoordinateQuery } from './hooks/useAddressToCoordinate'
 // import { useCategorySearchPlaceQuery } from './hooks/useCategorySearchPlace'
@@ -15,6 +15,9 @@ import PrivateFavorite from "./pages/Login/Private";
 // import { useKeywordSearchPlaceQuery } from './hooks/useKeywordSearchPlace'
 
 function App() {
+  useEffect(() => {
+    document.title = "NearByU";
+  }, []);
 
   // const coordinate = { lat: 37.5665, lng: 126.9780 };
 
@@ -29,8 +32,6 @@ function App() {
   // console.log("data4:", data4);
 
   // const [authenticate, setAuthenticate] = useState(false);
-  const authenticate = useAuthStore((state) => state.authenticate);
-
   return (
     <Routes>
       <Route element={<GlobalLayout />}>
