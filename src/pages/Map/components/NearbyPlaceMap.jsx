@@ -20,13 +20,7 @@ const MapPin = ({ colorClass, hoverColorClass = "", ringColorClass, label, onCli
   );
 };
 
-const NearbyPlaceMap = ({
-  location,
-  mapLevel,
-  places,
-  favoriteIds,
-  onPlaceClick,
-}) => {
+const NearbyPlaceMap = ({ location, mapLevel, places, favoriteIds, onPlaceClick }) => {
   return (
     <div className="h-[700px] w-full overflow-hidden rounded-lg border border-slate-200 bg-slate-100 shadow-sm">
       <Map center={location} level={mapLevel} className="h-full w-full">
@@ -54,10 +48,7 @@ const NearbyPlaceMap = ({
               zIndex={1000}
               yAnchor={1}
             >
-              <div
-                className="tooltip tooltip-top z-[9999]"
-                data-tip={getTooltipLabel(place)}
-              >
+              <div className="tooltip tooltip-top z-[9999]" data-tip={getTooltipLabel(place)}>
                 <MapPin
                   colorClass={markerColor}
                   hoverColorClass={markerHoverColor}

@@ -49,6 +49,63 @@ const getSelectedCategoryCode = (categoryQuery) => {
   return CATEGORY_CODE_BY_QUERY[normalizedCategory];
 };
 
+const MapSkeleton = () => {
+  return (
+    <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_360px]">
+      <div className="h-[700px] overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+        <div className="relative h-full bg-slate-100">
+          <div className="absolute inset-0 opacity-70">
+            <div className="h-full w-full bg-[linear-gradient(90deg,rgba(148,163,184,0.18)_1px,transparent_1px),linear-gradient(0deg,rgba(148,163,184,0.18)_1px,transparent_1px)] bg-[size:56px_56px]" />
+          </div>
+          <div className="absolute left-6 top-6 space-y-3">
+            <div className="skeleton h-5 w-40 rounded-full bg-slate-200" />
+            <div className="skeleton h-3 w-64 rounded-full bg-slate-200" />
+          </div>
+          <div className="absolute left-1/2 top-1/2 h-12 w-10 -translate-x-1/2 -translate-y-1/2">
+            <div className="h-9 w-9 rotate-45 rounded-[50%_50%_0_50%] bg-slate-300 shadow-lg" />
+            <div className="absolute left-3 top-3 h-3 w-3 rounded-full bg-white" />
+          </div>
+        </div>
+      </div>
+
+      <aside className="h-[700px] overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+        <div className="border-b border-slate-200 px-4 py-3">
+          <div className="skeleton h-5 w-24 rounded-full bg-slate-200" />
+        </div>
+        <div className="space-y-2 p-2">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <div key={index} className="rounded-md border border-slate-200 bg-white px-3 py-3">
+              <div className="skeleton h-4 w-3/5 rounded-full bg-slate-200" />
+              <div className="skeleton mt-3 h-3 w-4/5 rounded-full bg-slate-200" />
+            </div>
+          ))}
+        </div>
+      </aside>
+    </div>
+  );
+};
+
+const MapErrorState = ({ title, description, actionLabel, onAction }) => {
+  return (
+    <section className="py-5">
+      <div className="grid min-h-[520px] place-items-center rounded-lg border border-red-100 bg-white px-6 py-12 text-center shadow-sm">
+        <div className="max-w-sm">
+          <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-red-50 text-2xl font-black text-red-500">
+            !
+          </div>
+          <h1 className="mt-5 text-2xl font-bold text-slate-950">{title}</h1>
+          <p className="mt-2 text-sm font-medium leading-6 text-slate-600">{description}</p>
+          {actionLabel && onAction && (
+            <button type="button" onClick={onAction} className="btn btn-neutral mt-6">
+              {actionLabel}
+            </button>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const MapPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -87,7 +144,7 @@ const MapPage = () => {
     () => new Set(favorites.map((favorite) => String(favorite.id))),
     [favorites],
   );
-  
+
   const handlePlaceClick = (place) => {
     navigate("/detail", {
       state: { place },
@@ -96,28 +153,33 @@ const MapPage = () => {
 
   if (!kakaoAppKey) {
     return (
-      <section className="py-5">
-        <p className="text-sm font-medium text-red-600">
-          Kakao JavaScript API key is not configured.
-        </p>
-      </section>
+      <MapErrorState
+        title="지도 설정이 필요해요"
+        description="Kakao JavaScript API 키가 설정되어 있지 않아 지도를 표시할 수 없습니다."
+      />
     );
   }
 
   if (loading) {
     return (
       <section className="py-5">
-        <p className="text-sm font-medium text-slate-600">Loading map...</p>
+        <div className="mb-5">
+          <div className="skeleton h-10 w-40 rounded-full bg-slate-200" />
+          <div className="skeleton mt-3 h-4 w-72 rounded-full bg-slate-200" />
+        </div>
+        <MapSkeleton />
       </section>
     );
   }
 
   if (error) {
-    console.error(error);
     return (
-      <section className="py-5">
-        <p className="text-sm font-medium text-red-600">Failed to load the map.</p>
-      </section>
+      <MapErrorState
+        title="지도를 불러오지 못했어요"
+        description="네트워크 상태를 확인한 뒤 다시 시도해 주세요. 잠시 후에도 계속된다면 Kakao 지도 스크립트 설정을 확인해야 합니다."
+        actionLabel="다시 시도"
+        onAction={() => window.location.reload()}
+      />
     );
   }
 
@@ -145,7 +207,7 @@ const MapPage = () => {
         <NearbyPlaceList
           places={places}
           placesLoading={placesLoading && shouldFetchPlaces}
-          placesError={placesError}
+          placesError={placesError || !shouldFetchPlaces}
           formatDistance={formatDistance}
           getCategoryName={getCategoryName}
           getCategoryStyle={getCategoryStyle}

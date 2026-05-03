@@ -37,11 +37,11 @@ const Login = () => {
   <img 
     src="/Image/image.png" 
     className="w-20 h-20 object-contain"
-    alt="Nearby logo"
+    alt="NearByU logo"
   />
 
   <h1 className="text-3xl lg:text-5xl font-extrabold text-gray-800 leading-tight">
-    Nearby에서 <br className="hidden lg:block"/>
+    NearByU에서 <br className="hidden lg:block"/>
     주변을 탐색해보세요
   </h1>
 
